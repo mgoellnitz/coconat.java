@@ -1,0 +1,108 @@
+/*
+ *
+ * Copyright 2015 Martin Goellnitz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+import groovy.util.Node;
+
+defaultTasks 'clean', 'build'
+
+println "Gradle: ${gradle.gradleVersion}"
+
+version = '0.1-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'signing'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile "org.slf4j:slf4j-api:1.7.12"
+  compile "org.apache.commons:commons-lang3:3.4"
+
+  runtime "mysql:mysql-connector-java:5.1.31"
+  runtime "org.slf4j:slf4j-log4j12:1.7.12"
+
+  testCompile "org.testng:testng:6.8.21"
+  // tests are logging at debug level through special log4j.properties
+  testCompile "org.slf4j:slf4j-log4j12:1.7.12"
+  testRuntime "hsqldb:hsqldb:1.8.0.10"
+  testCompile "org.mockito:mockito-all:1.10.19"
+}
+
+test {
+  useTestNG() {
+  }
+}
+
+// maven artifact publication stuff
+task sourcesJar(type: Jar, dependsOn: classes) {
+  classifier = 'sources'
+  from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier = 'javadoc'
+  from "${buildDir}/docs/javadoc"
+}
+
+
+artifacts {
+  archives javadocJar, sourcesJar
+}
+
+publishing {
+  publications {
+    mavenCustom(MavenPublication) {
+      from components.java
+      groupId 'coconat'
+    }
+    mavenJava(MavenPublication) {
+      pom.withXml {
+        def pom = asNode()
+        def first = pom.children().get(0)
+        first.plus {
+          new Node(pom, 'name', 'Coconat')
+          new Node(pom, 'description', 'CoConAT Content Access Tool - Java')
+          new Node(pom, 'url', 'http://coconat.divshot.io/')
+          def scm = new Node(pom, 'scm')
+          scm.appendNode('connection', 'scm:git:https://github.com/mgoellnitz/coconat.java.git')
+          scm.appendNode('developerConnection', 'scm:git:git@github.com:mgoellnitz/coconat.java.git')
+          scm.appendNode('url', 'git@github.com:mgoellnitz/coconat.java.git')
+          def license = new Node(pom, 'licenses').appendNode('license')
+          license.appendNode('name', 'LGPL-3.0')
+          license.appendNode('url', 'http://opensource.org/licenses/LGPL-3.0')
+          license
+        }
+        def developer = pom.appendNode('developers').appendNode('developer')
+        developer.appendNode('name', 'Martin Goellnitz')
+        developer.appendNode('organization', 'Provocon')
+        developer.appendNode('organizationUrl', 'http://www.provocon.de/')
+      }
+      groupId 'coconat'
+      from components.java
+      artifact sourcesJar
+      artifact javadocJar
+    }
+  }
+}

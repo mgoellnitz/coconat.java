@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+  
+  Copyright (C) 2011-2015 Martin Goellnitz
+  
+  This work is licensed under the Creative Commons Attribution 3.0 
+  Unported License. To view a copy of this license, visit 
+  http://creativecommons.org/licenses/by/3.0/ or send a letter to 
+  Creative Commons, 444 Castro Street, Suite 900, Mountain View, 
+  California, 94041, USA.
+  
+-->
+<DocumentTypeModel xmlns="http://www.coremedia.com/2009/documenttypes"
+                   Name="sample-doctypes"
+                   Title="Sample Doctypes">
+
+  <ImportGrammar Name="coremedia-richtext-1.0" From="required-doctypes"/>
+
+  <DocType Name="Code" Comment="Document type to store code elements in the repository">
+    <StringProperty Name="annotation" Length="84"/>
+    <StringProperty Name="mimeType" Length="40"/>
+    <BlobProperty Name="code" MimeType="text/plain"/>
+  </DocType>
+  
+  <DocType Name="Linkable" Comment="Base document type for this example">
+    <StringProperty Name="title" Length="84"/>
+    <StringProperty Name="shortTitle" Length="60"/>
+    <StringProperty Name="keywords" Length="84"/>
+  </DocType>
+
+  <DocType Name="Article" Comment="Simple article document type" Parent="Linkable">
+    <XmlProperty Name="text" Grammar="coremedia-richtext-1.0"/>
+  </DocType>
+  
+  <DocType Name="Container" Comment="Simple container element to collect some navigation items" Parent="Linkable">
+    <LinkListProperty Name="contents" LinkType="Topic" />
+  </DocType>
+  
+  <DocType Name="ImageData" Comment="A picture document" Parent="Linkable">
+    <BlobProperty Name="data" MimeType="image/*"/>
+    <StringProperty Name="mimeType" Length="40"/>
+    <StringProperty Name="width" Length="15"/>
+    <StringProperty Name="height" Length="15"/>
+  </DocType>
+
+  <DocType Name="Topic" Comment="Base navigation item" Parent="Linkable">
+    <LinkListProperty Name="subTopics" LinkType="Topic" />
+    <LinkListProperty Name="elements" LinkType="Article" />
+    <LinkListProperty Name="thumbnail" LinkType="ImageData" Max="1"/>
+    <XmlProperty Name="teaser" Grammar="coremedia-richtext-1.0"/>
+    <LinkListProperty Name="relatedContainers" LinkType="Container" />
+  </DocType>
+  
+  <DocType Name="RootTopic" Comment="Root navigation singleton's type" Parent="Topic">
+    <LinkListProperty Name="bottomLinks" LinkType="Topic" />
+    <LinkListProperty Name="css" LinkType="Code" />
+    <LinkListProperty Name="js" LinkType="Code" />
+    <LinkListProperty Name="logo" LinkType="ImageData" Max="1"/>
+  </DocType>
+  
+</DocumentTypeModel>
