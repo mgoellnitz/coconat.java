@@ -1,10 +1,10 @@
 ![CoConAT](http://coconat.divshot.io/coconat-small.png)
 
-# CoConAT Java flavour
+[![Dependency Status](https://www.versioneye.com/user/projects/554fbbe8f7db0da74e000154/badge.svg?style=flat)](https://www.versioneye.com/user/projects/554fbbe8f7db0da74e000154)# CoConAT Java flavour
 
-This is the Java flavour of the CoConAT Content Access Tool. It is a small library 
-to access the contents of a CoreMedia content repository through direct access of 
-a Replication Live Server database in a structured way.
+This is the Java flavour of the [CoConAT Content Access Tool](http://coconat.divshot.io/). 
+It is a small library to access the contents of a CoreMedia content repository through 
+direct access of  a Replication Live Server database in a structured way.
 
 ## Ancestry
 
@@ -29,3 +29,11 @@ integration test but removed the need to mock too many items. To ease this a sma
 hsqldb was used which is not supported by recent CoreMedia versions. So the document 
 model was translated to an old 5.0 server. Both versions of the document type model 
 are included in this code repository.
+
+## Building
+
+The code includes the usual gradle based build. So a complete run will bee
+
+```
+gradle clean build jacocoTestReport publishToMavenLocal
+```
