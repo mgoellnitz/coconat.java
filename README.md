@@ -1,6 +1,8 @@
 ![CoConAT](http://coconat.divshot.io/coconat-small.png)
 
-[![Dependency Status](https://www.versioneye.com/user/projects/554fbbe8f7db0da74e000154/badge.svg?style=flat)](https://www.versioneye.com/user/projects/554fbbe8f7db0da74e000154)# CoConAT Java flavour
+[![Dependency Status](https://www.versioneye.com/user/projects/554fbbe8f7db0da74e000154/badge.svg?style=flat)](https://www.versioneye.com/user/projects/554fbbe8f7db0da74e000154)
+
+# CoConAT Java flavour
 
 This is the Java flavour of the [CoConAT Content Access Tool](http://coconat.divshot.io/). 
 It is a small library to access the contents of a CoreMedia content repository through 
