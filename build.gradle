@@ -18,7 +18,7 @@
  */
 import groovy.util.Node;
 
-defaultTasks 'clean', 'build'
+defaultTasks 'clean', 'build', 'jacocoTestReport'
 
 println "Gradle: ${gradle.gradleVersion}"
 

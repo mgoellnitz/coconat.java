@@ -17,7 +17,8 @@ you will find many method implemented which are not anticipated in the relating 
 The code contains a small ReadContent.java program which illustrates the usages and 
 is meant for connection to a menusite MySQL database created with a stock CoreMedia 7 
 content management server which can be created from the project workspace or from 
-the gradle demo for CoreMedia [server assembly]() and the [accompanying tools]().
+the gradle demo for CoreMedia [server assembly](https://github.com/mgoellnitz/cm-cms-webapp) 
+and the [accompanying tools](https://github.com/mgoellnitz/cm-cms-tools).
 
 ## Test
 
