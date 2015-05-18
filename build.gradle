@@ -43,7 +43,7 @@ dependencies {
   runtime "mysql:mysql-connector-java:5.1.35"
   runtime "org.slf4j:slf4j-log4j12:1.7.12"
 
-  testCompile "org.testng:testng:6.8.21"
+  testCompile "org.testng:testng:6.9.4"
   // tests are logging at debug level through special log4j.properties
   testCompile "org.slf4j:slf4j-log4j12:1.7.12"
   testRuntime "hsqldb:hsqldb:1.8.1.1"
