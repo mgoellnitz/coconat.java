@@ -1,6 +1,7 @@
 ![CoConAT](http://coconat.divshot.io/coconat-small.png)
 
 [![Dependency Status](https://www.versioneye.com/user/projects/554fbbe8f7db0da74e000154/badge.svg?style=flat)](https://www.versioneye.com/user/projects/554fbbe8f7db0da74e000154)
+[![Build Status](https://travis-ci.org/mgoellnitz/coconat.java.svg?branch=master)](https://travis-ci.org/mgoellnitz/coconat.java)
 
 # CoConAT Java flavour
 
