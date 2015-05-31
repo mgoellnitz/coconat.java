@@ -98,4 +98,4 @@ public class CoconatRepositoryTest {
         Assert.assertEquals(children.size(), 2, "Unexpected number of topics");
     } // testImplementation()
 
-} // CoconatTextConverterTest
+} // CoconatRepositoryTest
