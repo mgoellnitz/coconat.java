@@ -22,7 +22,7 @@ import coconat.Blob;
 
 
 /**
- * Single implementation of the blob interface.
+ * Simple implementation of the blob interface.
  */
 public class CoconatBlob implements Blob {
 
