@@ -19,7 +19,7 @@
 import groovy.util.Node;
 
 plugins {
-  // id "com.jfrog.artifactory" version '3.0.3'
+  id "com.jfrog.artifactory" version '3.0.3'
   id 'com.github.kt3k.coveralls' version '2.0.1'
 }
 
@@ -27,11 +27,10 @@ defaultTasks 'clean', 'build', 'jacocoTestReport'
 
 println "Gradle: ${gradle.gradleVersion}"
 
-version = '0.1-SNAPSHOT'
+version = '0.1'
 
 apply plugin: 'java'
 apply plugin: 'jacoco'
-apply plugin: 'signing'
 apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.7
