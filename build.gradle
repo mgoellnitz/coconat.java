@@ -77,9 +77,23 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
   from "${buildDir}/docs/javadoc"
 }
 
-
 artifacts {
   archives javadocJar, sourcesJar
+}
+
+artifactory {
+  contextUrl = 'https://oss.jfrog.org/artifactory'
+  publish {
+    repository {
+      repoKey = 'oss-snapshot-local'
+      username = "$bintrayUser"
+      password = "$bintrayKey"
+      maven = true
+    }
+    defaults {
+      publications ('mavenJava')
+    }
+  }
 }
 
 publishing {
