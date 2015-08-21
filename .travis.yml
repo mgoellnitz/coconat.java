@@ -3,4 +3,4 @@ sudo: false
 language: java
 
 after_success:
-  - gradle jacocoTestReport coveralls build
+  - gradle jacocoTestReport coveralls build artifactoryPublish
