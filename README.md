@@ -44,8 +44,8 @@ gradle clean build jacocoTestReport publishToMavenLocal
 
 ## Availability
 
-Stable releases are right now available through the maven style repository at
+Stable releases are available through the jcenter repository while snapshots are available at oss.jfrog.org.
 
 ```
-http://dl.bintray.com/mgoellnitz/maven/
+https://oss.jfrog.org/artifactory/oss-snapshot-local/
 ```
