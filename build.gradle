@@ -85,7 +85,7 @@ artifactory {
   contextUrl = 'https://oss.jfrog.org/artifactory'
   publish {
     repository {
-      repoKey = 'oss-snapshot-local'
+      repoKey = version.endsWith('SNAPSHOT') ? 'oss-snapshot-local' : 'oss-release-local'
       username = "$bintrayUser"
       password = "$bintrayKey"
       maven = true
