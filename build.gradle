@@ -41,7 +41,7 @@ repositories {
 }
 
 dependencies {
-  compile "org.slf4j:slf4j-api:1.7.12"
+  compile "org.slf4j:slf4j-api:1.7.13"
   compile "org.apache.commons:commons-lang3:3.4"
 
   runtime "mysql:mysql-connector-java:5.1.37"
