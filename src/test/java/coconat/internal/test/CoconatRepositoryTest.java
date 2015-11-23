@@ -24,6 +24,8 @@ import coconat.Repository;
 import coconat.internal.CoconatContentRepository;
 import java.util.List;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -34,8 +36,12 @@ import org.testng.annotations.Test;
 @Test
 public class CoconatRepositoryTest {
 
+    private static final Logger LOG = LoggerFactory.getLogger(CoconatRepositoryTest.class);
+
     @Test
     public void testRepository() {
+        System.out.println("testRepository() stdout");
+        LOG.debug("testRepository()");
         String dbDriver = "org.hsqldb.jdbcDriver";
         String dbUrl = "jdbc:hsqldb:src/test/resources/unittest;readonly=true";
         String dbUser = "sa";

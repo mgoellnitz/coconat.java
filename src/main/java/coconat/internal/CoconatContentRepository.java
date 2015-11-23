@@ -148,8 +148,8 @@ public class CoconatContentRepository implements Repository {
      *
      * The instance "id" must be of type "type" otherwise the method will fail!
      *
-     * @param type
-     * @param id
+     * @param type document type of the content item to retrieve the properties map for
+     * @param id content id of the content item to retrieve the properties map for
      * @return map mapping the property names to their respective values
      */
     protected Map<String, Object> getProperties(String type, String id) {
