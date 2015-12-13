@@ -113,7 +113,7 @@ publishing {
         first.plus {
           new Node(pom, 'name', 'Coconat')
           new Node(pom, 'description', 'CoConAT Content Access Tool - Java')
-          new Node(pom, 'url', 'http://coconat.divshot.io/')
+          new Node(pom, 'url', 'http://mgoellnitz.github.io/coconat/')
           def scm = new Node(pom, 'scm')
           scm.appendNode('connection', 'scm:git:https://github.com/mgoellnitz/coconat.java.git')
           scm.appendNode('developerConnection', 'scm:git:git@github.com:mgoellnitz/coconat.java.git')
