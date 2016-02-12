@@ -22,7 +22,9 @@ import coconat.Blob;
 import coconat.Content;
 import coconat.Repository;
 import coconat.internal.CoconatContentRepository;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,6 +103,13 @@ public class CoconatRepositoryTest {
         Assert.assertEquals(topics.size(), 1, "Unexpected number of topics with a certain name");
         Set<Content> children = repository.getChildren("9", "coco.*");
         Assert.assertEquals(children.size(), 2, "Unexpected number of topics");
+        Set<String> ids = repository.listIds("Topic", null, "id_", false);
+        Assert.assertEquals(ids.size(), 2, "Unexpected total number of topics");
+        Assert.assertEquals(ids.iterator().next(), "6", "Unexpected id of first topic in list");
+        Map<String, Object> ap = new HashMap<>();
+        ap.put("additionalProperty", "Value");
+        repository.setAdditionalProperties(ap);
+        Assert.assertEquals(repository.getAdditionalProperties().get("additionalProperty"), "Value", "Unexpected id of first topic in list");
     } // testImplementation()
 
 } // CoconatRepositoryTest
