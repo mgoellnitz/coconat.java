@@ -71,12 +71,12 @@ public class CoconatContentRepository implements Repository {
         try {
             Class.forName(this.dbDriver).newInstance();
         } catch (RuntimeException|ClassNotFoundException|InstantiationException|IllegalAccessException ex) {
-            LOG.error("afterPropertiesSet() error loading driver {} ({}) ", dbDriver, this, ex);
+            LOG.error("() error loading driver {} ({}) ", dbDriver, this, ex);
         } // try/catch
         try {
             dbConnection = DriverManager.getConnection(this.dbUrl, this.dbUser, this.dbPassword);
         } catch (RuntimeException|SQLException ex) {
-            LOG.error("afterPropertiesSet() error getting connection to {} as {}", this.dbUrl, this.dbUser, ex);
+            LOG.error("() error getting connection to {} as {}", this.dbUrl, this.dbUser, ex);
         } // try/catch
     } // CoconatContentRepository()
 
@@ -386,7 +386,6 @@ public class CoconatContentRepository implements Repository {
                     } // if
                 } // if
             } // if
-            return result;
         } catch (SQLException se) {
             LOG.error("getChildrenIds() "+query, se);
         } // try/catch

@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2015 Martin Goellnitz
+ * Copyright 2015-2016 Martin Goellnitz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -38,10 +38,9 @@ public class CoconatRepositoryTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(CoconatRepositoryTest.class);
 
+
     @Test
     public void testRepository() {
-        System.out.println("testRepository() stdout");
-        LOG.debug("testRepository()");
         String dbDriver = "org.hsqldb.jdbcDriver";
         String dbUrl = "jdbc:hsqldb:src/test/resources/unittest;readonly=true";
         String dbUser = "sa";
