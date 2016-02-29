@@ -41,18 +41,16 @@ repositories {
 }
 
 dependencies {
-  compile 'org.slf4j:slf4j-api:1.7.16'
+  compile 'org.slf4j:slf4j-api:1.7.18'
   compile 'org.apache.commons:commons-lang3:3.4'
 
   runtime 'mysql:mysql-connector-java:5.1.38'
-  // runtime 'org.slf4j:slf4j-log4j12:1.7.16'
+  // runtime 'org.slf4j:slf4j-log4j12:1.7.18'
 
   testCompile 'org.testng:testng:6.9.10'
   // tests are logging at debug level through special logback.groovy
   testCompile 'ch.qos.logback:logback-classic:1.1.5'
-  testCompile 'org.codehaus.groovy:groovy:2.4.5'
-  // tests are logging at debug level through special log4j.properties
-  // testCompile 'org.slf4j:slf4j-log4j12:1.7.16'
+  testCompile 'org.codehaus.groovy:groovy:2.4.6'
   testCompile 'hsqldb:hsqldb:1.8.1.1'
   testCompile 'org.mockito:mockito-all:1.10.19'
 }
