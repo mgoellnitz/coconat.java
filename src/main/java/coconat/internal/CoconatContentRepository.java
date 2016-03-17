@@ -46,7 +46,7 @@ public class CoconatContentRepository implements Repository {
     private static final Logger LOG = LoggerFactory.getLogger(CoconatContentRepository.class);
 
     /**
-     * desribe which type are derived from which others - via documenttype definitions
+     * describe which type are derived from which others - via documenttype definitions
      */
     private Map<String, String> parents = new HashMap<>();
 
