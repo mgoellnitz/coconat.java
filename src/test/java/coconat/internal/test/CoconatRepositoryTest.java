@@ -22,6 +22,7 @@ import coconat.Blob;
 import coconat.Content;
 import coconat.Repository;
 import coconat.internal.CoconatContentRepository;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,11 +77,35 @@ public class CoconatRepositoryTest {
         Assert.assertEquals(blob.getPropertyName(), "data", "Unexpected property name reference in blob");
         Object s = home.get("subTopics");
         Assert.assertNotNull(s, "no subtopics found in root topic");
+        home.remove("title");
+        Assert.assertNull(home.get("title"), "Unexpected title found");
+        home.put("title", "new title");
+        Assert.assertEquals(home.get("title"), "new title", "Unexpected title found");
+        home.clear();
+        home.putAll(Collections.EMPTY_MAP);
+        Assert.assertNull(home.get("title"), "Unexpected title found");
     } // testRepository()
 
 
+    @Test
+    public void testInitFailure() {
+        String dbDriver = "org.xsqldb.jdbcDriver";
+        String dbUrl = "jdbc:xsqldb:src/test/resources/unittest;readonly=true";
+        String dbUser = "sa";
+        String dbPassword = "";
+        Repository repository = new CoconatContentRepository(dbUrl, dbDriver, dbUser, dbPassword);
+        boolean success = false;
+        try {
+            LOG.info("testInitFailure() {}", repository.getChild("CoConAT/Home"));
+        } catch (RuntimeException npe) {
+            success = true;
+        }
+        Assert.assertTrue(success, "We should not be able to find a folder.");
+    } // testInitFailure()
+
+
     /**
-     * Test of the not public api elements.
+     * Test of non-public api elements.
      * These elements have been used in other projects before this one and were just not ripped out of the code and
      * this should be tested.
      */
@@ -111,5 +136,6 @@ public class CoconatRepositoryTest {
         repository.setAdditionalProperties(ap);
         Assert.assertEquals(repository.getAdditionalProperties().get("additionalProperty"), "Value", "Unexpected id of first topic in list");
     } // testImplementation()
+
 
 } // CoconatRepositoryTest
