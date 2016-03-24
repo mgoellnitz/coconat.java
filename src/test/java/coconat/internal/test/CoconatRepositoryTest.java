@@ -106,8 +106,8 @@ public class CoconatRepositoryTest {
 
     /**
      * Test of non-public api elements.
-     * These elements have been used in other projects before this one and were just not ripped out of the code and
-     * this should be tested.
+     * These elements have been used in other projects before this one and
+     * were just not ripped out of the code and still these should be tested.
      */
     @Test
     public void testImplementation() {
