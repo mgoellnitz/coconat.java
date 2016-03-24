@@ -135,6 +135,12 @@ public class CoconatRepositoryTest {
         ap.put("additionalProperty", "Value");
         repository.setAdditionalProperties(ap);
         Assert.assertEquals(repository.getAdditionalProperties().get("additionalProperty"), "Value", "Unexpected id of first topic in list");
+        ids = repository.getChildrenIds("1");
+        Assert.assertEquals(ids.size(), 3, "Unexpected number of children IDs for root folder.");
+        Assert.assertEquals(repository.getParents().size(), 0, "Unexpected initial parents collection found.");
+        Map<String, String> parents = new HashMap<>();
+        repository.setParents(parents);
+        Assert.assertEquals(repository.getParents(), parents, "Unexpected parents collection found.");
     } // testImplementation()
 
 
