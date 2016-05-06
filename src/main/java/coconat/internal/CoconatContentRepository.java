@@ -52,31 +52,19 @@ public class CoconatContentRepository implements Repository {
 
     private Connection dbConnection;
 
-    private final String dbUrl;
-
-    private final String dbDriver;
-
-    private final String dbUser;
-
-    private final String dbPassword;
-
     private Map<String, Object> additionalProperties = new HashMap<>();
 
 
     public CoconatContentRepository(String dbUrl, String dbDriver, String dbUser, String dbPassword) {
-        this.dbUrl = dbUrl;
-        this.dbDriver = dbDriver;
-        this.dbUser = dbUser;
-        this.dbPassword = dbPassword;
         try {
-            Class.forName(this.dbDriver).newInstance();
+            Class.forName(dbDriver).newInstance();
         } catch (RuntimeException|ClassNotFoundException|InstantiationException|IllegalAccessException ex) {
             LOG.error("() error loading driver {} ({}) ", dbDriver, this, ex);
         } // try/catch
         try {
-            dbConnection = DriverManager.getConnection(this.dbUrl, this.dbUser, this.dbPassword);
+            dbConnection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
         } catch (RuntimeException|SQLException ex) {
-            LOG.error("() error getting connection to {} as {}", this.dbUrl, this.dbUser, ex);
+            LOG.error("() error getting connection to {} as {}", dbUrl, dbUser, ex);
         } // try/catch
     } // CoconatContentRepository()
 
