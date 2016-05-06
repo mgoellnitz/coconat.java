@@ -18,8 +18,6 @@
  */
 package coconat;
 
-import coconat.Content;
-import coconat.Repository;
 import coconat.internal.CoconatContentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
