@@ -82,7 +82,8 @@ public class CoconatRepositoryTest {
         home.put("title", "new title");
         Assert.assertEquals(home.get("title"), "new title", "Unexpected title found");
         home.clear();
-        home.putAll(Collections.EMPTY_MAP);
+        Map<String, Object> emptyMap = Collections.emptyMap();
+        home.putAll(emptyMap);
         Assert.assertNull(home.get("title"), "Unexpected title found");
     } // testRepository()
 
