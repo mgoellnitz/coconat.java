@@ -46,7 +46,7 @@ dependencies {
 
   // runtime 'mysql:mysql-connector-java:5.1.39'
 
-  testCompile 'org.testng:testng:6.9.11'
+  testCompile 'org.testng:testng:6.9.12'
   // tests are logging at debug level through special logback.groovy
   testCompile 'ch.qos.logback:logback-classic:1.1.7'
   testCompile 'org.codehaus.groovy:groovy:2.4.7'
