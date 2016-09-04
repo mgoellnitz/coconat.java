@@ -58,33 +58,33 @@ public class CoconatRepositoryTest {
         Assert.assertTrue(home.containsKey("keywords"), "root topic should contain property keywords");
         Assert.assertTrue(home.containsValue("CoConAT"), "root topic should property value CoConAT in some property");
         Object l = home.get("logo");
-        Assert.assertNotNull(l, "no logo found in root topic");
+        Assert.assertNotNull(l, "no logo found in root topic.");
         List<Content> logos = (List<Content>) l;
-        Assert.assertEquals(logos.size(), 1, "Expected to find exactly one logo");
+        Assert.assertEquals(logos.size(), 1, "Expected to find exactly one logo.");
         Content logo = logos.get(0);
-        Assert.assertEquals(logo.keySet().size(), logo.values().size(), "Size of keys must match size of values for logo");
-        Assert.assertEquals(logo.size(), 17, "Unexpected number of properties for logo");
-        Assert.assertEquals(logo.get("width"), "200", "Unexpected width in logo");
-        Assert.assertEquals(logo.get("height"), "94", "Unexpected height in logo");
-        Assert.assertEquals(logo.getId(), "10", "Unexpected id for logo");
-        Assert.assertEquals(""+logo, "10 :ImageData", "Unexpected string representation for logo");
+        Assert.assertEquals(logo.keySet().size(), logo.values().size(), "Size of keys must match size of values for logo.");
+        Assert.assertEquals(logo.size(), 17, "Unexpected number of properties for logo.");
+        Assert.assertEquals(logo.get("width"), "200", "Unexpected width in logo.");
+        Assert.assertEquals(logo.get("height"), "94", "Unexpected height in logo.");
+        Assert.assertEquals(logo.getId(), "10", "Unexpected id for logo.");
+        Assert.assertEquals(""+logo, "10 :ImageData", "Unexpected string representation for logo.");
         Object b = logo.get("data");
-        Assert.assertNotNull(b, "no blob found in logo object");
+        Assert.assertNotNull(b, "no blob found in logo object.");
         Blob blob = (Blob) b;
-        Assert.assertEquals(blob.getLen(), 10657, "Unexpected number of bytes in blob");
-        Assert.assertEquals(blob.getMimeType(), "image/png", "Unexpected mime type in blob");
-        Assert.assertEquals(blob.getContentId(), "10", "Unexpected content id reference in blob");
-        Assert.assertEquals(blob.getPropertyName(), "data", "Unexpected property name reference in blob");
+        Assert.assertEquals(blob.getLen(), 10657, "Unexpected number of bytes in blob.");
+        Assert.assertEquals(blob.getMimeType(), "image/png", "Unexpected mime type in blob.");
+        Assert.assertEquals(blob.getContentId(), "10", "Unexpected content id reference in blob.");
+        Assert.assertEquals(blob.getPropertyName(), "data", "Unexpected property name reference in blob.");
         Object s = home.get("subTopics");
-        Assert.assertNotNull(s, "no subtopics found in root topic");
+        Assert.assertNotNull(s, "no subtopics found in root topic.");
         home.remove("title");
-        Assert.assertNull(home.get("title"), "Unexpected title found");
+        Assert.assertNull(home.get("title"), "Unexpected title found.");
         home.put("title", "new title");
-        Assert.assertEquals(home.get("title"), "new title", "Unexpected title found");
+        Assert.assertEquals(home.get("title"), "new title", "Unexpected title found.");
         home.clear();
         Map<String, Object> emptyMap = Collections.emptyMap();
         home.putAll(emptyMap);
-        Assert.assertNull(home.get("title"), "Unexpected title found");
+        Assert.assertNull(home.get("title"), "Unexpected title found.");
     } // testRepository()
 
 
@@ -118,24 +118,25 @@ public class CoconatRepositoryTest {
         String dbPassword = "";
         CoconatContentRepository repository = new CoconatContentRepository(dbUrl, dbDriver, dbUser, dbPassword);
         Content homeFolder = repository.getChild("CoConAT");
-        Assert.assertEquals(homeFolder.getId(), "9", "Unexpected id for home folder");
+        Assert.assertEquals(homeFolder.getId(), "9", "Unexpected id for home folder.");
         Set<Content> topicSet = repository.getChildrenWithType(homeFolder.getId(), "Topic");
-        Assert.assertEquals(topicSet.size(), 2, "Unexpected number of topics");
+        Assert.assertEquals(topicSet.size(), 2, "Unexpected number of topics.");
         for (Content topic : topicSet) {
             Set<String> referrerIds = repository.getReferrerIds(topic.getId(), "RootTopic", "subTopics");
-            Assert.assertEquals(referrerIds.size(), 1, "Unexpected number of referrers to topic ");
+            Assert.assertEquals(referrerIds.size(), 1, "Unexpected number of referrers to topic.");
+            Assert.assertEquals(repository.getParentId(topic.getId()), homeFolder.getId(), "Unexpected parent discovered.");
         } // for
         List<Content> topics = repository.listContents("Topic", "AND lastname_ = 'coconat.php'", null, true);
-        Assert.assertEquals(topics.size(), 1, "Unexpected number of topics with a certain name");
+        Assert.assertEquals(topics.size(), 1, "Unexpected number of topics with a certain name.");
         Set<Content> children = repository.getChildren("9", "coco.*");
-        Assert.assertEquals(children.size(), 2, "Unexpected number of topics");
+        Assert.assertEquals(children.size(), 2, "Unexpected number of topics.");
         Set<String> ids = repository.listIds("Topic", null, "id_", false);
-        Assert.assertEquals(ids.size(), 2, "Unexpected total number of topics");
-        Assert.assertEquals(ids.iterator().next(), "6", "Unexpected id of first topic in list");
+        Assert.assertEquals(ids.size(), 2, "Unexpected total number of topics.");
+        Assert.assertEquals(ids.iterator().next(), "6", "Unexpected id of first topic in list.");
         Map<String, Object> ap = new HashMap<>();
         ap.put("additionalProperty", "Value");
         repository.setAdditionalProperties(ap);
-        Assert.assertEquals(repository.getAdditionalProperties().get("additionalProperty"), "Value", "Unexpected id of first topic in list");
+        Assert.assertEquals(repository.getAdditionalProperties().get("additionalProperty"), "Value", "Unexpected id of first topic in list.");
         ids = repository.getChildrenIds("1");
         Assert.assertEquals(ids.size(), 3, "Unexpected number of children IDs for root folder.");
         Assert.assertEquals(repository.getParents().size(), 0, "Unexpected initial parents collection found.");
@@ -143,6 +144,5 @@ public class CoconatRepositoryTest {
         repository.setParents(parents);
         Assert.assertEquals(repository.getParents(), parents, "Unexpected parents collection found.");
     } // testImplementation()
-
 
 } // CoconatRepositoryTest

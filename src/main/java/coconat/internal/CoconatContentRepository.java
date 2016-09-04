@@ -305,6 +305,21 @@ public class CoconatContentRepository implements Repository {
     } // getChildId()
 
 
+    public String getParentId(String childId) {
+        String id = null;
+        String query = "SELECT * FROM Resources WHERE id_ = "+childId;
+        try (Statement s = dbConnection.createStatement(); ResultSet resultSet = s.executeQuery(query)) {
+            if (resultSet.next()) {
+                id = ""+resultSet.getInt("folderid_");
+                LOG.debug("getParentId() {}: {}", childId, id);
+            } // if
+        } catch (SQLException se) {
+            LOG.error("getParentId() "+query, se);
+        } // try/catch
+        return id;
+    } // getParentId()
+
+
     public Set<String> listIds(String typeName, String optionalQuery, String orderProperty, Boolean ascending) {
         Set<String> ids = new HashSet<>();
         String query = "SELECT id_ FROM Resources WHERE documenttype_ = '"+typeName+"' ";
