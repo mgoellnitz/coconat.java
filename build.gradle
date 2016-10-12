@@ -44,7 +44,7 @@ dependencies {
   compile 'org.slf4j:slf4j-api:1.7.21'
   compile 'org.apache.commons:commons-lang3:3.4'
 
-  // runtime 'mysql:mysql-connector-java:5.1.39'
+  // runtime 'mysql:mysql-connector-java:5.1.40'
 
   testCompile 'org.testng:testng:6.9.12'
   // tests are logging at debug level through special logback.groovy
@@ -88,7 +88,7 @@ artifactory {
       repoKey = version.endsWith('SNAPSHOT') ? 'oss-snapshot-local' : 'oss-release-local'
       username = "$bintrayUser"
       password = "$bintrayKey"
-      maven = true
+      // maven = true
     }
     defaults {
       publications ('mavenJava')
