@@ -54,5 +54,5 @@ https://oss.jfrog.org/artifactory/oss-snapshot-local/
 
 ## Issue Reporting
 
-Pleas use the issue (reporting facility at github](https://github.com/mgoellnitz/coconat.java/issues) 
+Please use the [issue reporting facility at github](https://github.com/mgoellnitz/coconat.java/issues) 
 to get in touch.
