@@ -3,11 +3,12 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/554fbbe8f7db0da74e000154/badge.svg?style=flat)](https://www.versioneye.com/user/projects/554fbbe8f7db0da74e000154)
 [![Build Status](https://travis-ci.org/mgoellnitz/coconat.java.svg?branch=master)](https://travis-ci.org/mgoellnitz/coconat.java)
 [![Coverage Status](https://coveralls.io/repos/github/mgoellnitz/coconat.java/badge.svg?branch=master)](https://coveralls.io/github/mgoellnitz/coconat.java?branch=master)
+[![Alternate Coverage Status](https://codecov.io/gh/mgoellnitz/coconat.java)](https://coveralls.io/github/mgoellnitz/coconat.java?branch=master)
 
 
 # CoConAT Java flavour
 
-This is the Java flavour of the [CoConAT Content Access Tool](http://coconat.divshot.io/).
+This is the Java flavour of the [CoConAT Content Access Tool](http://mgoellnitz.github.io/coconat/).
 It is a small library to access the contents of a CoreMedia content repository through
 direct access of  a Replication Live Server database in a structured way.
 
@@ -50,3 +51,8 @@ Stable releases are available through the jcenter repository while snapshots are
 ```
 https://oss.jfrog.org/artifactory/oss-snapshot-local/
 ```
+
+## Issue Reporting
+
+Pleas use the issue (reporting facility at github](https://github.com/mgoellnitz/coconat.java/issues) 
+to get in touch.
