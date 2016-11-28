@@ -40,7 +40,7 @@ document type model are included in this code repository.
 
 ## Building
 
-The code includes the usual gradle based build. So a complete run will bee
+The code includes the usual gradle based build. So a complete run will be
 
 ```
 gradle clean build jacocoTestReport publishToMavenLocal
