@@ -20,7 +20,7 @@ import groovy.util.Node;
 
 plugins {
   id 'com.jfrog.artifactory' version '3.1.1'
-  id 'com.github.kt3k.coveralls' version '2.6.3'
+  id 'com.github.kt3k.coveralls' version '2.7.1'
 }
 
 defaultTasks 'clean', 'build', 'jacocoTestReport'
