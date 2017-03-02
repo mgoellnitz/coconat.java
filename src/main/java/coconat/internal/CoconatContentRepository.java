@@ -336,11 +336,9 @@ public class CoconatContentRepository implements Repository {
         } // if
         try (Statement s = dbConnection.createStatement(); ResultSet resultSet = s.executeQuery(query)) {
             while (resultSet.next()) {
-                if (LOG.isInfoEnabled()) {
-                    int contentId = resultSet.getInt("id_");
-                    ids.add(""+contentId);
-                    LOG.debug("getBean() {}", contentId);
-                } // if
+                int contentId = resultSet.getInt("id_");
+                ids.add(""+contentId);
+                LOG.debug("getBean() {}", contentId);
             } // while
         } catch (SQLException se) {
             LOG.error("listIds() "+query, se);
