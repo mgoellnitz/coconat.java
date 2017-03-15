@@ -51,7 +51,7 @@ dependencies {
   testCompile 'ch.qos.logback:logback-classic:1.2.1'
   testCompile 'org.codehaus.groovy:groovy:2.4.9'
   testCompile 'hsqldb:hsqldb:1.8.1.1'
-  testCompile 'org.mockito:mockito-core:2.7.17'
+  testCompile 'org.mockito:mockito-core:2.7.12'
 }
 
 test {
