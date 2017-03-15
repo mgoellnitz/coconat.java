@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/mgoellnitz/coconat.java.svg?branch=master)](https://travis-ci.org/mgoellnitz/coconat.java)
 [![Build Status](https://gitlab.com/mgoellnitz/coconat.java/badges/master/build.svg)](https://gitlab.com/mgoellnitz/coconat.java/pipelines)
 [![Coverage Status](https://coveralls.io/repos/github/mgoellnitz/coconat.java/badge.svg?branch=master)](https://coveralls.io/github/mgoellnitz/coconat.java?branch=master)
-X
+[![Coverage Status](https://codecov.io/gh/mgoellnitz/coconat.java)](https://codecov.io/gh/mgoellnitz/coconat.java)
 
 # CoConAT Java flavour
 
