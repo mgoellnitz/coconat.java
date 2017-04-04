@@ -38,13 +38,14 @@ public final class ReadContent {
     public static void main(String[] args) {
         LOG.info("main() {}");
         String dbDriver = "com.mysql.jdbc.Driver";
-        String dbUrl = "jdbc:mysql://localhost:3306/menusite";
-        String dbUser = "menusite";
-        String dbPassword = "menusite";
+        String dbUrl = "jdbc:mysql://localhost:3306/cm_management";
+        String dbUser = "cm_management";
+        String dbPassword = "cm_management";
         Repository repository = new CoconatContentRepository(dbUrl, dbDriver, dbUser, dbPassword);
         Content content = repository.getContent("58");
         LOG.info("main() content {}", content);
         LOG.info("main() properties {}", content.keySet());
+        LOG.info("main() property placement {}", content.get("placement"));
     } // main()
 
 } // ReadContent

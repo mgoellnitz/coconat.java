@@ -33,8 +33,8 @@ apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'maven-publish'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
   jcenter()
@@ -45,6 +45,7 @@ dependencies {
   compile 'org.apache.commons:commons-lang3:3.5'
 
   // runtime 'mysql:mysql-connector-java:5.1.41'
+  // runtime 'ch.qos.logback:logback-classic:1.2.2'
 
   testCompile 'org.testng:testng:6.11'
   // tests are logging at debug level through special logback.groovy
