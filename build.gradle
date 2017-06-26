@@ -51,7 +51,7 @@ dependencies {
   testCompile 'org.testng:testng:6.11'
   // tests are logging at debug level through special logback.groovy
   testCompile 'ch.qos.logback:logback-classic:1.2.3'
-  testCompile 'org.codehaus.groovy:groovy:2.4.11'
+  testCompile 'org.codehaus.groovy:groovy:2.4.12'
   testCompile 'hsqldb:hsqldb:1.8.1.1'
   testCompile 'org.mockito:mockito-core:2.8.47'
 }
