@@ -45,10 +45,10 @@ dependencies {
   compile 'org.slf4j:slf4j-api:1.7.25'
   compile 'org.apache.commons:commons-lang3:3.6'
 
-  // runtime 'mysql:mysql-connector-java:5.1.44'
+  // runtime 'mysql:mysql-connector-java:5.1.45'
   // runtime 'ch.qos.logback:logback-classic:1.2.3'
 
-  testCompile 'org.testng:testng:6.11'
+  testCompile 'org.testng:testng:6.13.1'
   // tests are logging at debug level through special logback.groovy
   testCompile 'ch.qos.logback:logback-classic:1.2.3'
   testCompile 'org.codehaus.groovy:groovy:2.4.12'
