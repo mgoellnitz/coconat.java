@@ -43,7 +43,7 @@ repositories {
 
 dependencies {
   compile 'org.slf4j:slf4j-api:1.7.25'
-  compile 'org.apache.commons:commons-lang3:3.6'
+  compile 'org.apache.commons:commons-lang3:3.7'
 
   // runtime 'mysql:mysql-connector-java:5.1.45'
   // runtime 'ch.qos.logback:logback-classic:1.2.3'
