@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2015-2017 Martin Goellnitz
+ * Copyright 2015-201( Martin Goellnitz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -21,6 +21,7 @@ import groovy.util.Node;
 plugins {
   id 'com.jfrog.artifactory' version '4.4.0'
   id 'com.github.kt3k.coveralls' version '2.7.1'
+  id "net.ossindex.audit" version "0.1.1"
 }
 
 defaultTasks 'clean', 'build', 'jacocoTestReport'
