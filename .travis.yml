@@ -1,5 +1,5 @@
 # 
-# Copyright 2016-2017 Martin Goellnitz
+# Copyright 2016-2019 Martin Goellnitz
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -28,6 +28,8 @@ jdk:
 
 before_install:
  - chmod +x gradlew
+ - git branch -l|tail -1
+ - git checkout $(git branch -l|tail -1)
  
 after_success:
   - ./gradlew jacocoTestReport coveralls build generatePomFileForMavenJavaPublication artifactoryPublish
