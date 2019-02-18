@@ -1,6 +1,6 @@
 /**
  *
- * Copyright 2011-2016 Martin Goellnitz
+ * Copyright 2011-2019 Martin Goellnitz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -36,6 +36,13 @@ public class CoconatContent implements Content, Map<String, Object> {
     private final Map<String, Object> properties;
 
 
+    /**
+     * Create a content object instance from a given ID, document type name a named properties.
+     *
+     * @param id ID to be assumed by the content object
+     * @param type document type name of the content object
+     * @param properties named values for the properties of the content object
+     */
     public CoconatContent(String id, String type, Map<String, Object> properties) {
         this.id = id;
         this.documentType = type;
@@ -57,7 +64,7 @@ public class CoconatContent implements Content, Map<String, Object> {
     /*
      * Map Interface
      */
-
+    
     @Override
     public void clear() {
         properties.clear();
@@ -130,6 +137,7 @@ public class CoconatContent implements Content, Map<String, Object> {
     }
 
 
+    @Override
     public int compareTo(Content c) {
         return getId().compareTo(c.getId());
     } // compareTo()

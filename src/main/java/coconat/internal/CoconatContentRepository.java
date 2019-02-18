@@ -1,6 +1,6 @@
 /**
  *
- * Copyright 2011-2016 Martin Goellnitz
+ * Copyright 2011-2019 Martin Goellnitz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -41,9 +41,22 @@ import org.slf4j.LoggerFactory;
 /**
  * Simple non caching implementation of the content repository.
  */
+@SuppressWarnings("PMD.GodClass")
 public class CoconatContentRepository implements Repository {
 
     private static final Logger LOG = LoggerFactory.getLogger(CoconatContentRepository.class);
+
+    private static final String VIRTUAL_PROPERTY_VERSION = "version_";
+
+    private static final String VIRTUAL_PROPERTY_ID = "id_";
+
+    private static final String VIRTUAL_PROPERTY_FOLDER_ID = "folderid_";
+
+    private static final String VIRTUAL_PROPERTY_NAME = "name_";
+
+    private static final String VIRTUAL_PROPERTY_TYPE = "documenttype_";
+
+    private static final String SELECT_FROM_RESOURCES_CLAUSE = "SELECT * FROM Resources WHERE ";
 
     /**
      * describe which type are derived from which others - via documenttype definitions
@@ -55,6 +68,14 @@ public class CoconatContentRepository implements Repository {
     private Map<String, Object> additionalProperties = new HashMap<>();
 
 
+    /**
+     * Create a content repository instance from a DB connection descripbed by connection parameters.
+     *
+     * @param dbUrl JDBC URL of the database to be used for this repository instance
+     * @param dbDriver class name of the JDBC driver to be used for the connection
+     * @param dbUser user name to be used for the connection
+     * @param dbPassword password to be used for the connection
+     */
     public CoconatContentRepository(String dbUrl, String dbDriver, String dbUser, String dbPassword) {
         try {
             Class.forName(dbDriver).newInstance();
@@ -69,26 +90,54 @@ public class CoconatContentRepository implements Repository {
     } // CoconatContentRepository()
 
 
+    /**
+     * Get document type parent relation.
+     *
+     * @return map mapping document types names to the name of the corresponding parent document type
+     */
     public Map<String, String> getParents() {
         return parents;
     }
 
 
+    /**
+     * Set document type parent.
+     *
+     * @param parents map mapping document types names to the name of the corresponding parent document type
+     */
     public void setParents(Map<String, String> parents) {
         this.parents = parents;
     }
 
 
+    /**
+     * Get static additional properties.
+     * Each content object generated through this repository implementation will receive these named values as properties.
+     *
+     * @return map mapping property names to their respective values
+     */
     public Map<String, Object> getAdditionalProperties() {
         return additionalProperties;
     }
 
 
+    /**
+     * Set static additional properties.
+     * Each content object generated through this repository implementation will receive these named values as properties.
+     *
+     * @param additionalProperties map mapping property names to their respective values
+     */
     public void setAdditionalProperties(Map<String, Object> additionalProperties) {
         this.additionalProperties = additionalProperties;
     }
 
 
+    /**
+     * Get content object with a given ID.
+     *
+     * @param id ID of the object to look for
+     * @return content object for the ID or null
+     */
     @Override
     public Content getContent(String id) {
         Content result = null;
@@ -104,12 +153,27 @@ public class CoconatContentRepository implements Repository {
     } // getContent()
 
 
+    /**
+     * Get content object described by its path in the repository.
+     *
+     * @param path path of the object to look for
+     * @return content object described by the path or the root folder
+     */
     @Override
     public Content getChild(String path) {
         return getContent(getChildId(path));
     } // getChild()
 
 
+    /**
+     * List content objects matching certain criteria.
+     *
+     * @param typeName exact document type name of the document to look for - no subtypes
+     * @param optionalQuery SQL based where clause part to be used
+     * @param orderProperty name of the property to sort result list
+     * @param ascending true if sorting should be ascending - false otherwise
+     * @return sorted list of matching content objects
+     */
     public List<Content> listContentsOfExactType(String typeName, String optionalQuery, String orderProperty, Boolean ascending) {
         List<Content> result = new ArrayList<>();
         for (String id : listIds(typeName, optionalQuery, orderProperty, ascending)) {
@@ -119,6 +183,15 @@ public class CoconatContentRepository implements Repository {
     } // listBeansOfExactClass()
 
 
+    /**
+     * List content objects matching certain criteria.
+     *
+     * @param typeName document type name of the document to look for
+     * @param optionalQuery SQL based where clause part to be used
+     * @param orderProperty name of the property to sort result list
+     * @param ascending true if sorting should be ascending - false otherwise
+     * @return sorted list of matching content objects
+     */
     public List<Content> listContents(String typeName, String optionalQuery, String orderProperty, Boolean ascending) {
         List<Content> result = new ArrayList<>();
         for (String t = typeName; t!=null; t = parents.get(t)) {
@@ -146,11 +219,12 @@ public class CoconatContentRepository implements Repository {
             // it's most likely a folder
             return properties;
         } // if
-        String query = "SELECT * FROM "+type+" WHERE id_ = "+id+" ORDER BY version_ DESC";
+        String query = "SELECT * FROM "+type+" WHERE "+VIRTUAL_PROPERTY_ID+" = "+id+" ORDER BY "+VIRTUAL_PROPERTY_VERSION+" DESC";
+        String sqlError = "getProperties() query=";
         try (Statement baseStatement = dbConnection.createStatement(); ResultSet baseSet = baseStatement.executeQuery(query)) {
             if (baseSet.next()) {
-                int contentId = baseSet.getInt("id_");
-                int version = baseSet.getInt("version_");
+                int contentId = baseSet.getInt(VIRTUAL_PROPERTY_ID);
+                int version = baseSet.getInt(VIRTUAL_PROPERTY_VERSION);
                 LOG.debug("getProperties() {}/{} :{}", contentId, version, type);
 
                 ResultSetMetaData metaData = baseSet.getMetaData();
@@ -179,7 +253,7 @@ public class CoconatContentRepository implements Repository {
                         ids.add(linkIndex, targetId);
                     } // while
                 } catch (SQLException se) {
-                    LOG.error("getProperties() "+query, se);
+                    LOG.error(sqlError+query, se);
                 } // try/catch
                 for (Entry<String, List<String>> entry : linkLists.entrySet()) {
                     properties.put(entry.getKey(), new LazyContentList(this, entry.getValue()));
@@ -202,11 +276,11 @@ public class CoconatContentRepository implements Repository {
                                 LOG.debug("getProperties() {} blob bytes {} ({})", propertyName, data.length, len);
                             } // if
                         } catch (SQLException se) {
-                            LOG.error("getProperties() "+query, se);
+                            LOG.error(sqlError+query, se);
                         } // try/catch
                     } // while
                 } catch (SQLException se) {
-                    LOG.error("getProperties() "+query, se);
+                    LOG.error(sqlError+query, se);
                 } // try/catch
 
                 // select xml
@@ -228,7 +302,7 @@ public class CoconatContentRepository implements Repository {
                                 } // if
                             } // if
                         } catch (SQLException se) {
-                            LOG.error("getProperties() "+query, se);
+                            LOG.error(sqlError+query, se);
                         } // try/catch
                         LOG.debug("getProperties() {} text={}", propertyName, text.toString());
 
@@ -239,12 +313,12 @@ public class CoconatContentRepository implements Repository {
                                 String xmlData = dataSet.getString("data");
                                 data.append(xmlData);
                                 if (LOG.isDebugEnabled()) {
-                                    LOG.debug("getProperties() "+propertyName+" "+dataSet.getInt("id")+" "+dataSet.getInt("segmentno")+" "
+                                    LOG.debug(sqlError+propertyName+" "+dataSet.getInt("id")+" "+dataSet.getInt("segmentno")+" "
                                             +xmlData);
                                 } // if
                             } // if
                         } catch (SQLException se) {
-                            LOG.error("getProperties() "+query, se);
+                            LOG.error(sqlError+query, se);
                         } // try/catch
                         LOG.debug("getProperties() {} data={}", propertyName, data.toString());
 
@@ -256,24 +330,30 @@ public class CoconatContentRepository implements Repository {
                         } // try/catch
                     } // while
                 } catch (SQLException se) {
-                    LOG.error("getProperties() "+query, se);
+                    LOG.error(sqlError+query, se);
                 } // try/catch
             } // if
         } catch (SQLException se) {
-            LOG.error("getProperties() "+query, se);
+            LOG.error(sqlError+query, se);
         } // try/catch
         return properties;
     } // getProperties()
 
 
+    /**
+     * Get document type for a given content object.
+     *
+     * @param id ID of the object to get the document type for
+     * @return document type name or null
+     */
     public String getType(String id) {
         String type = null;
-        String query = "SELECT * FROM Resources WHERE id_ = '"+id+"'";
+        String query = SELECT_FROM_RESOURCES_CLAUSE+VIRTUAL_PROPERTY_ID+" = '"+id+"'";
         try (Statement s = dbConnection.createStatement(); ResultSet resultSet = s.executeQuery(query)) {
             if (resultSet.next()) {
-                type = resultSet.getString("documenttype_");
+                type = resultSet.getString(VIRTUAL_PROPERTY_TYPE);
                 if (LOG.isDebugEnabled()) {
-                    int contentId = resultSet.getInt("id_");
+                    int contentId = resultSet.getInt(VIRTUAL_PROPERTY_ID);
                     LOG.debug("getType() "+contentId+": "+type);
                 } // if
                 if (type==null) {
@@ -287,6 +367,12 @@ public class CoconatContentRepository implements Repository {
     } // getType()
 
 
+    /**
+     * Get ID for a content object described by its path in the repository.
+     *
+     * @param path path of the object to look for
+     * @return ID of the object described by the path or at least "1" for the root folder
+     */
     public String getChildId(String path) {
         try {
             String[] arcs = path.split("/");
@@ -305,12 +391,18 @@ public class CoconatContentRepository implements Repository {
     } // getChildId()
 
 
+    /**
+     * Get the ID of the parent folder for a given content object.
+     *
+     * @param childId ID of the child to find the parent for
+     * @return ID of the parent - or null
+     */
     public String getParentId(String childId) {
         String id = null;
-        String query = "SELECT * FROM Resources WHERE id_ = "+childId;
+        String query = SELECT_FROM_RESOURCES_CLAUSE+VIRTUAL_PROPERTY_ID+" = "+childId;
         try (Statement s = dbConnection.createStatement(); ResultSet resultSet = s.executeQuery(query)) {
             if (resultSet.next()) {
-                id = ""+resultSet.getInt("folderid_");
+                id = ""+resultSet.getInt(VIRTUAL_PROPERTY_FOLDER_ID);
                 LOG.debug("getParentId() {}: {}", childId, id);
             } // if
         } catch (SQLException se) {
@@ -320,23 +412,32 @@ public class CoconatContentRepository implements Repository {
     } // getParentId()
 
 
-    public Set<String> listIds(String typeName, String optionalQuery, String orderProperty, Boolean ascending) {
-        Set<String> ids = new HashSet<>();
-        String query = "SELECT id_ FROM Resources WHERE documenttype_ = '"+typeName+"' ";
+    /**
+     * List IDs of documents fulfilling certain criteria.
+     *
+     * @param typeName exact document type name of the document to look for - no subtypes
+     * @param optionalQuery SQL based where clause part to be used
+     * @param orderProperty name of the property to sort result list
+     * @param ascending true if sorting should be ascending - false otherwise
+     * @return sorted list of IDs of matching content objects
+     */
+    public List<String> listIds(String typeName, String optionalQuery, String orderProperty, Boolean ascending) {
+        List<String> ids = new ArrayList<>();
+        @SuppressWarnings("PMD.ConsecutiveLiteralAppends") // Enhance readability using more than one line
+        StringBuilder query = new StringBuilder(128).append("SELECT ").append(VIRTUAL_PROPERTY_ID);
+        query.append(" FROM Resources WHERE ").append(VIRTUAL_PROPERTY_TYPE).append(" = '").append(typeName).append("' ");
         if (optionalQuery!=null) {
-            query += optionalQuery;
+            query.append(optionalQuery);
         } // if
         if (orderProperty!=null) {
-            String asc = "ASC";
-            if (ascending!=null) {
-                asc = ascending ? "ASC" : "DESC";
-            } // if
+            String asc = (ascending==null) ? "ASC" : (ascending ? "ASC" : "DESC");
             String order = orderProperty+" "+asc;
-            query += " ORDER BY "+order;
+            query.append(" ORDER BY ");
+            query.append(order);
         } // if
-        try (Statement s = dbConnection.createStatement(); ResultSet resultSet = s.executeQuery(query)) {
+        try (Statement s = dbConnection.createStatement(); ResultSet resultSet = s.executeQuery(query.toString())) {
             while (resultSet.next()) {
-                int contentId = resultSet.getInt("id_");
+                int contentId = resultSet.getInt(VIRTUAL_PROPERTY_ID);
                 ids.add(""+contentId);
                 LOG.debug("getBean() {}", contentId);
             } // while
@@ -347,21 +448,36 @@ public class CoconatContentRepository implements Repository {
     } // listIds()
 
 
+    /**
+     * Get ID of a child in a given folder with a certain name.
+     *
+     * @param name name of the child to find
+     * @param parentId id of the folder so search in
+     * @return id of the object or null
+     */
     public String getChildId(String name, String parentId) {
         String id = null;
-        String query = "SELECT * FROM Resources WHERE folderid_ = "+parentId+" AND name_ = '"+name+"'";
-        try (Statement s = dbConnection.createStatement(); ResultSet resultSet = s.executeQuery(query)) {
+        String q = SELECT_FROM_RESOURCES_CLAUSE+VIRTUAL_PROPERTY_FOLDER_ID+" = "+parentId+" AND "+VIRTUAL_PROPERTY_NAME+" = '"+name+"'";
+        try (Statement s = dbConnection.createStatement(); ResultSet resultSet = s.executeQuery(q)) {
             if (resultSet.next()) {
-                id = ""+resultSet.getInt("id_");
+                id = ""+resultSet.getInt(VIRTUAL_PROPERTY_ID);
                 LOG.debug("getChildId() {}/{}: {}", parentId, name, id);
             } // if
         } catch (SQLException se) {
-            LOG.error("getChildId() "+query, se);
+            LOG.error("getChildId() "+q, se);
         } // try/catch
         return id;
     } // getChildId()
 
 
+    /**
+     * Get ids of the objects in a folder with a certain type where the name matches a given pattern.
+     *
+     * @param parentId id of the folder
+     * @type document type name the children must fulfill
+     * @param pattern pattern used for name matching
+     * @return set of IDs of the objects in the folder matching the pattern
+     */
     public Set<String> getChildrenIds(String parentId, String type, String pattern) {
         LOG.info("getChildrenIds() parentId={} type={} pattern={}", parentId, type, pattern);
         Pattern p = null;
@@ -369,14 +485,15 @@ public class CoconatContentRepository implements Repository {
             p = Pattern.compile(pattern);
         } // if
         Set<String> result = new HashSet<>();
-        String query = "SELECT * FROM Resources WHERE folderid_ = "+parentId;
+        StringBuilder query = new StringBuilder(SELECT_FROM_RESOURCES_CLAUSE);
+        query.append(VIRTUAL_PROPERTY_FOLDER_ID).append(" = ").append(parentId);
         if (type!=null) {
-            query += " AND documenttype_ = '"+type+"'";
+            query.append(" AND ").append(VIRTUAL_PROPERTY_TYPE).append(" = '").append(type).append('\'');
         } // if
-        try (Statement s = dbConnection.createStatement(); ResultSet resultSet = s.executeQuery(query)) {
+        try (Statement s = dbConnection.createStatement(); ResultSet resultSet = s.executeQuery(query.toString())) {
             while (resultSet.next()) {
-                String id = ""+resultSet.getInt("id_");
-                String name = resultSet.getString("name_");
+                String id = ""+resultSet.getInt(VIRTUAL_PROPERTY_ID);
+                String name = resultSet.getString(VIRTUAL_PROPERTY_NAME);
                 LOG.info("getChildrenIds() {}/{}: {}", parentId, name, id);
                 if (p==null) {
                     result.add(id);
@@ -394,29 +511,58 @@ public class CoconatContentRepository implements Repository {
     } // getChildrenIds()
 
 
+    /**
+     * Get ids of the objects in a folder where the name matches a given pattern.
+     *
+     * @param parentId id of the folder
+     * @param pattern pattern used for name matching
+     * @return set of IDs of the objects in the folder matching the pattern
+     */
     public Set<String> getChildrenIds(String parentId, String pattern) {
         return getChildrenIds(parentId, null, pattern);
     } // getChildrenIds()
 
 
+    /**
+     * Get ids of the object in a folder.
+     *
+     * @param parentId id of the folder
+     * @return set of IDs of the objects in the folder
+     */
     public Set<String> getChildrenIds(String parentId) {
         return getChildrenIds(parentId, null);
     } // getChildrenIds()
 
 
+    /**
+     * Get ids of object from a given folder with a certain type.
+     *
+     * @param parentId id of the folder to search in
+     * @param type document type name the children must fulfill
+     * @return set of IDs of objects
+     */
     public Set<String> getChildrenWithTypeIds(String parentId, String type) {
         return getChildrenIds(parentId, type, null);
     } // getChildrenWithTypeIds()
 
 
+    /**
+     * Return a set of IDs of objects refering a given object.
+     *
+     * @param targetId id of the object to find referrers for
+     * @param type document type the referrers must fulfill
+     * @param property name of the property the referrings object use to point to the target
+     * @return set of content ids
+     */
     public Set<String> getReferrerIds(String targetId, String type, String property) {
         LOG.info("getReferrerIds() targetId={} type={} property={}", targetId, type, property);
         Set<String> result = new HashSet<>();
-        String query = "SELECT * FROM LinkLists WHERE targetdocument = "+targetId;
+        StringBuilder query = new StringBuilder("SELECT * FROM LinkLists WHERE targetdocument = ");
+        query.append(targetId);
         if (property!=null) {
-            query += " AND propertyname = '"+property+"'";
+            query.append(" AND propertyname = '").append(property).append('\'');
         } // if
-        try (Statement s = dbConnection.createStatement(); ResultSet resultSet = s.executeQuery(query)) {
+        try (Statement s = dbConnection.createStatement(); ResultSet resultSet = s.executeQuery(query.toString())) {
             while (resultSet.next()) {
                 String sourceId = ""+resultSet.getInt("sourcedocument");
                 String sourceVersion = ""+resultSet.getInt("sourceversion");
@@ -428,7 +574,7 @@ public class CoconatContentRepository implements Repository {
                 if (version==null) {
                     version = properties.get("VERSION_");
                 } // if
-                LOG.info("getReferrerIds() version={} :{}", version, (version!=null ? version.getClass().getName() : "null"));
+                LOG.info("getReferrerIds() version={} :{}", version, (version==null ? "null" : version.getClass().getName()));
                 if ((!result.contains(sourceId))&&sourceVersion.equals(version.toString())) {
                     result.add(sourceId);
                 } // if
@@ -468,6 +614,13 @@ public class CoconatContentRepository implements Repository {
     } // createContent()
 
 
+    /**
+     * Get children of a folder with a certain type.
+     *
+     * @param parentId if of the folder
+     * @param type type of the children to find
+     * @return set of content objects
+     */
     public Set<Content> getChildrenWithType(String parentId, String type) {
         Set<Content> result = new HashSet<>();
         for (String id : getChildrenWithTypeIds(parentId, type)) {
@@ -478,6 +631,13 @@ public class CoconatContentRepository implements Repository {
     } // getChildrenWithType()
 
 
+    /**
+     * Get children of a folder matching a name pattern.
+     *
+     * @param startFolderId id of the folder to search in
+     * @param pattern pattern for matching
+     * @return set of content objects
+     */
     public Set<Content> getChildren(String startFolderId, String pattern) {
         LOG.info("getChildren() {}", startFolderId);
         Set<String> resultIds = getChildrenIds(startFolderId, pattern);

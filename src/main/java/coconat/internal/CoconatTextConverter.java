@@ -1,6 +1,6 @@
 /**
  *
- * Copyright 2011-2015 Martin Goellnitz
+ * Copyright 2011-2019 Martin Goellnitz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -219,6 +219,13 @@ public final class CoconatTextConverter {
     } // mergeTextAndData()
 
 
+    /**
+     * Prepare net string from text and data segments in the data store of a repository.
+     *
+     * @param text text segment as fetched from the database
+     * @param data data segment as fetched from the database
+     * @return readable text in XML format
+     */
     public static String convert(StringBuilder text, StringBuilder data) {
         return new CoconatTextConverter(text, data).mergeTextAndData();
     } // convert()

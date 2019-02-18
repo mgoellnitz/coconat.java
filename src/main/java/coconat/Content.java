@@ -1,6 +1,6 @@
 /**
  *
- * Copyright 2011-2015 Martin Goellnitz
+ * Copyright 2011-2019 Martin Goellnitz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -24,13 +24,13 @@ import java.util.Map;
 /**
  * Basic interface all items from the repository will fulfill.
  */
-public interface Content extends Map<String, Object> {
-    
+public interface Content extends Map<String, Object>, Comparable<Content> {
+
     /**
      * Return the id if this instance.
-     * 
+     *
      * @return String based formatted content id.
      */
     String getId();
-    
+
 } // Content

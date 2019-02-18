@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2015 Martin Goellnitz
+ * Copyright 2015-2019 Martin Goellnitz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Test program.
+ * Quite simple test program.
  */
 public final class ReadContent {
 
@@ -35,8 +35,13 @@ public final class ReadContent {
     }
 
 
+    /**
+     * Test to fetch content from a localhost MySQL database with the ID of 58.
+     *
+     * @param args arguments are ignored
+     */
     public static void main(String[] args) {
-        LOG.info("main() {}");
+        LOG.info("main()");
         String dbDriver = "com.mysql.jdbc.Driver";
         String dbUrl = "jdbc:mysql://localhost:3306/cm_management";
         String dbUser = "cm_management";

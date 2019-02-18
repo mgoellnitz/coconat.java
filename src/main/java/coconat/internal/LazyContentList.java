@@ -1,6 +1,6 @@
 /**
  *
- * Copyright 2015 Martin Goellnitz
+ * Copyright 2015-2019 Martin Goellnitz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -23,6 +23,10 @@ import coconat.Repository;
 import java.util.AbstractList;
 import java.util.List;
 
+
+/**
+ * A lazy content list will fetch the required objects by index on access - not on creation.
+ */
 public class LazyContentList extends AbstractList<Content> implements List<Content> {
 
     private final Repository repository;
@@ -30,7 +34,14 @@ public class LazyContentList extends AbstractList<Content> implements List<Conte
     private final List<String> idList;
 
 
+    /**
+     * Create a content object list described by a given repository and list of IDs in that repository.
+     *
+     * @param repository repository to be used for lazy fetch
+     * @param idList list of IDs for the elements of the content list
+     */
     public LazyContentList(Repository repository, List<String> idList) {
+        super();
         this.repository = repository;
         this.idList = idList;
     } // LazyContentList()
