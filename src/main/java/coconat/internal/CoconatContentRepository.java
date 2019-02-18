@@ -80,12 +80,12 @@ public class CoconatContentRepository implements Repository {
         try {
             Class.forName(dbDriver).newInstance();
         } catch (RuntimeException|ClassNotFoundException|InstantiationException|IllegalAccessException ex) {
-            LOG.error("() error loading driver {} ({}) ", dbDriver, this, ex);
+            LOG.error("() error loading driver {} ({}) {}", dbDriver, this, ex);
         } // try/catch
         try {
             dbConnection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
         } catch (RuntimeException|SQLException ex) {
-            LOG.error("() error getting connection to {} as {}", dbUrl, dbUser, ex);
+            LOG.error("() error getting connection to {} as {} {}", dbUrl, dbUser, ex);
         } // try/catch
     } // CoconatContentRepository()
 
@@ -298,13 +298,13 @@ public class CoconatContentRepository implements Repository {
                                 String xmlText = textSet.getString("text");
                                 text.append(xmlText);
                                 if (LOG.isDebugEnabled()) {
-                                    LOG.debug("getBean() "+propertyName+" "+textSet.getInt("id")+" "+textSet.getInt("segmentno")+" "+xmlText);
+                                    LOG.debug("getBean() {} {} {} {}", propertyName, textSet.getInt("id"), textSet.getInt("segmentno"), xmlText);
                                 } // if
                             } // if
                         } catch (SQLException se) {
                             LOG.error(sqlError+query, se);
                         } // try/catch
-                        LOG.debug("getProperties() {} text={}", propertyName, text.toString());
+                        LOG.debug("getProperties() {} text={}", propertyName, text);
 
                         query = "SELECT * FROM SgmlData WHERE id = "+target;
                         StringBuilder data = new StringBuilder(256);
@@ -313,14 +313,13 @@ public class CoconatContentRepository implements Repository {
                                 String xmlData = dataSet.getString("data");
                                 data.append(xmlData);
                                 if (LOG.isDebugEnabled()) {
-                                    LOG.debug(sqlError+propertyName+" "+dataSet.getInt("id")+" "+dataSet.getInt("segmentno")+" "
-                                            +xmlData);
+                                    LOG.debug("getProperties() {} {} {} {}", propertyName, dataSet.getInt("id"), dataSet.getInt("segmentno"), xmlData);
                                 } // if
                             } // if
                         } catch (SQLException se) {
                             LOG.error(sqlError+query, se);
                         } // try/catch
-                        LOG.debug("getProperties() {} data={}", propertyName, data.toString());
+                        LOG.debug("getProperties() {} data={}", propertyName, data);
 
                         try {
                             properties.put(propertyName, CoconatTextConverter.convert(text, data));
@@ -354,7 +353,7 @@ public class CoconatContentRepository implements Repository {
                 type = resultSet.getString(VIRTUAL_PROPERTY_TYPE);
                 if (LOG.isDebugEnabled()) {
                     int contentId = resultSet.getInt(VIRTUAL_PROPERTY_ID);
-                    LOG.debug("getType() "+contentId+": "+type);
+                    LOG.debug("getType() {}: {} ", contentId, type);
                 } // if
                 if (type==null) {
                     type = ""; // Folder indication
