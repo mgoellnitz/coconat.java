@@ -473,7 +473,7 @@ public class CoconatContentRepository implements Repository {
      * Get ids of the objects in a folder with a certain type where the name matches a given pattern.
      *
      * @param parentId id of the folder
-     * @type document type name the children must fulfill
+     * @param type document type name the children must fulfill
      * @param pattern pattern used for name matching
      * @return set of IDs of the objects in the folder matching the pattern
      */
