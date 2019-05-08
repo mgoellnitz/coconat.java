@@ -78,7 +78,7 @@ public final class CoconatTextConverter {
     } // CoconatTextConverter()
 
 
-    private int readHex(StringBuilder buf, int pos) throws IndexOutOfBoundsException {
+    private int readHex(StringBuilder buf, int pos) {
         return ((SEDEC[buf.charAt(pos)]<<12)+(SEDEC[buf.charAt(pos+1)]<<8)+(SEDEC[buf.charAt(pos+2)]<<4)+SEDEC[buf.charAt(pos+3)]);
     } // readHex()
 
