@@ -80,7 +80,7 @@ public class CoconatContentRepository implements Repository {
         try {
             Class.forName(dbDriver).newInstance();
         } catch (RuntimeException|ClassNotFoundException|InstantiationException|IllegalAccessException ex) {
-            LOG.error("() error loading driver {} ({}) {}", dbDriver, this, ex);
+            LOG.error("() error loading driver {} {}", dbDriver, ex);
         } // try/catch
         try {
             dbConnection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
