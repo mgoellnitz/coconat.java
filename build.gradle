@@ -61,7 +61,7 @@ pmd {
   ruleSets = []
   ruleSetFiles = files('pmd.xml')
   sourceSets = [sourceSets.main]
-  toolVersion = '6.15.0'
+  toolVersion = '6.16.0'
 }
 
 test {
