@@ -50,6 +50,7 @@ dependencies {
   // runtime 'ch.qos.logback:logback-classic:1.2.3'
 
   testCompile 'org.testng:testng:7.0.0'
+  testCompile 'com.google.inject:guice:4.2.2'
   // tests are logging at debug level through special logback.groovy
   testCompile 'ch.qos.logback:logback-classic:1.2.3'
   testCompile 'org.codehaus.groovy:groovy:2.5.8'
