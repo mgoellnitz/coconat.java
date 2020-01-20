@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2015-2019 Martin Goellnitz
+ * Copyright 2015-2020 Martin Goellnitz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -49,20 +49,20 @@ dependencies {
   // runtime 'mysql:mysql-connector-java:5.1.45'
   // runtime 'ch.qos.logback:logback-classic:1.2.3'
 
-  testCompile 'org.testng:testng:7.0.0'
+  testCompile 'org.testng:testng:7.1.0'
   testCompile 'com.google.inject:guice:4.2.2'
   // tests are logging at debug level through special logback.groovy
   testCompile 'ch.qos.logback:logback-classic:1.2.3'
-  testCompile 'org.codehaus.groovy:groovy:2.5.8'
+  testCompile 'org.codehaus.groovy:groovy:2.5.9'
   testCompile 'hsqldb:hsqldb:1.8.1.1'
-  testCompile 'org.mockito:mockito-core:3.0.0'
+  testCompile 'org.mockito:mockito-core:3.2.4'
 }
 
 pmd {
   ruleSets = []
   ruleSetFiles = files('pmd.xml')
   sourceSets = [sourceSets.main]
-  toolVersion = '6.18.0'
+  toolVersion = '6.20.0'
 }
 
 test {
@@ -78,7 +78,7 @@ jacocoTestReport {
 }
 
 jacoco {
-  toolVersion = '0.8.4'
+  toolVersion = '0.8.5'
 }
 
 // maven artifact publication stuff
