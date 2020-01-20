@@ -2,7 +2,7 @@
 
 [![Latest Release](https://img.shields.io/github/release/mgoellnitz/coconat.java.svg)](https://github.com/mgoellnitz/coconat.java/releases/latest)
 [![Build Status](https://travis-ci.org/mgoellnitz/coconat.java.svg?branch=master)](https://travis-ci.org/mgoellnitz/coconat.java)
-[![Build Status](https://gitlab.com/coconat/coconat.java/badges/master/build.svg)](https://gitlab.com/coconat/coconat.java/pipelines)
+[![Build Status](https://img.shields.io/gitlab/pipeline/coconat/coconat.java.svg)](https://gitlab.com/coconat/coconat.java/pipelines)
 [![Coverage Status](https://coveralls.io/repos/github/mgoellnitz/coconat.java/badge.svg?branch=master)](https://coveralls.io/github/mgoellnitz/coconat.java?branch=master)
 [![Coverage Status](http://codecov.io/github/mgoellnitz/coconat.java/coverage.svg?branch=master)](https://codecov.io/gh/mgoellnitz/coconat.java)
 
