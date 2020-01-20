@@ -29,7 +29,7 @@ stages:
 
 build:
   stage: coconat
-  script: gradle jacocoTestReport coveralls audit build generatePomFileForMavenJavaPublication artifactoryPublish
+  script: ./gradlew jacocoTestReport coveralls audit build generatePomFileForMavenJavaPublication artifactoryPublish
   artifacts:
     paths:
     - build/libs/*
