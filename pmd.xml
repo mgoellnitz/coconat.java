@@ -60,6 +60,7 @@
     <exclude name="LawOfDemeter"/>
     <!-- not necessarily a good ideas for other projects -->
     <exclude name="NPathComplexity"/>
+    <exclude name="DataClass"/>
   </rule>
   <rule ref="category/java/design.xml/AvoidDeeplyNestedIfStmts">
     <properties>
