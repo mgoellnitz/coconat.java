@@ -19,9 +19,9 @@
 import groovy.util.Node;
 
 plugins {
-  id 'com.jfrog.artifactory' version '4.9.0'
-  id 'com.github.kt3k.coveralls' version '2.8.2'
-  id "net.ossindex.audit" version "0.4.8"
+  id 'com.jfrog.artifactory' version '4.13.0'
+  id 'com.github.kt3k.coveralls' version '2.10.0'
+  id "net.ossindex.audit" version "0.4.11"
 }
 
 defaultTasks 'clean', 'build', 'jacocoTestReport'
@@ -53,7 +53,7 @@ dependencies {
   testCompile 'com.google.inject:guice:4.2.3'
   // tests are logging at debug level through special logback.groovy
   testCompile 'ch.qos.logback:logback-classic:1.2.3'
-  testCompile 'org.codehaus.groovy:groovy:3.0.3'
+  testCompile 'org.codehaus.groovy:groovy:3.0.4'
   testCompile 'hsqldb:hsqldb:1.8.1.1'
   testCompile 'org.mockito:mockito-core:3.3.3'
 }
@@ -62,7 +62,7 @@ pmd {
   ruleSets = []
   ruleSetFiles = files('pmd.xml')
   sourceSets = [sourceSets.main]
-  toolVersion = '6.23.0'
+  toolVersion = '6.24.0'
 }
 
 test {
