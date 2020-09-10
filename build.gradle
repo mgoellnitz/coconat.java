@@ -38,31 +38,35 @@ apply plugin: 'maven-publish'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+// The variable is needed, even if no publication is executed
+def bintrayUser = project.hasProperty('BINTRAY_USER') ? "$BINTRAY_USER" : '-'
+def bintrayKey = project.hasProperty('BINTRAY_KEY') ? "$BINTRAY_KEY" : '-'
+
 repositories {
   jcenter()
 }
 
 dependencies {
   compile 'org.slf4j:slf4j-api:1.7.30'
-  compile 'org.apache.commons:commons-lang3:3.10'
+  compile 'org.apache.commons:commons-lang3:3.11'
 
   // runtime 'mysql:mysql-connector-java:5.1.45'
   // runtime 'ch.qos.logback:logback-classic:1.2.3'
 
-  testCompile 'org.testng:testng:7.1.0'
+  testCompile 'org.testng:testng:7.3.0'
   testCompile 'com.google.inject:guice:4.2.3'
   // tests are logging at debug level through special logback.groovy
   testCompile 'ch.qos.logback:logback-classic:1.2.3'
-  testCompile 'org.codehaus.groovy:groovy:3.0.4'
+  testCompile 'org.codehaus.groovy:groovy:3.0.5'
   testCompile 'hsqldb:hsqldb:1.8.1.1'
-  testCompile 'org.mockito:mockito-core:3.3.3'
+  testCompile 'org.mockito:mockito-core:3.5.10'
 }
 
 pmd {
   ruleSets = []
   ruleSetFiles = files('pmd.xml')
   sourceSets = [sourceSets.main]
-  toolVersion = '6.24.0'
+  toolVersion = '6.27.0'
 }
 
 test {
