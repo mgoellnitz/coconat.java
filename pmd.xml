@@ -80,6 +80,11 @@
     </properties>
   </rule>
   -->
+  <rule ref="category/java/design.xml/CognitiveComplexity">
+    <properties>
+      <property name="reportLevel" value="55"/>
+    </properties>
+  </rule>
   <rule ref="category/java/design.xml/ExcessiveImports">
     <properties>
       <property name="minimum" value="35"/>
