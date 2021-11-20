@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2015-2020 Martin Goellnitz
+ * Copyright 2015-2021 Martin Goellnitz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -48,16 +48,16 @@ repositories {
 
 dependencies {
   implementation 'org.slf4j:slf4j-api:1.7.32'
-  implementation 'org.apache.commons:commons-lang3:3.11'
+  implementation 'org.apache.commons:commons-lang3:3.12.0'
 
   // runtime 'mysql:mysql-connector-java:5.1.45'
   // runtime 'ch.qos.logback:logback-classic:1.2.3'
 
   testImplementation 'org.testng:testng:7.4.0'
-  testImplementation 'com.google.inject:guice:4.2.3'
+  testImplementation 'com.google.inject:guice:5.0.1'
   // tests are logging at debug level through special logback.groovy
   testImplementation 'ch.qos.logback:logback-classic:1.2.7'
-  testImplementation 'org.codehaus.groovy:groovy:3.0.7'
+  testImplementation 'org.codehaus.groovy:groovy:3.0.9'
   testImplementation 'hsqldb:hsqldb:1.8.1.1'
   testImplementation 'org.mockito:mockito-core:4.1.0'
 }
