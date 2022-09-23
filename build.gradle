@@ -19,6 +19,7 @@
 import groovy.util.Node;
 
 plugins {
+  id 'com.github.nbaztec.coveralls-jacoco' version '1.2.14'
   id "net.ossindex.audit" version "0.4.11"
 }
 
@@ -80,6 +81,7 @@ audit {
 
 jacocoTestReport {
   reports {
+    xml.enabled = true
     html.enabled = true
   }
 }
